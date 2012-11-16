@@ -26,7 +26,7 @@ Ext.define('BuildDialog', {
             },
             {
                 xtype: 'component',
-                renderTpl: "<strong>Message Contains Text:</strong>"
+                renderTpl: "<strong>Build ID Contains Text:</strong>"
             },
             {
                 xtype: 'container',
@@ -72,9 +72,9 @@ Ext.define('BuildDialog', {
    
         var build_start = Rally.util.DateTime.toIsoString( this.start_date_picker.getValue(), false);
         var build_end = Rally.util.DateTime.toIsoString( Rally.util.DateTime.add( this.end_date_picker.getValue(), "day", 1 ), false);
-        var build_message = this.text_picker.getValue();
+        var build_id = this.text_picker.getValue();
         
-        console.log( "start,end,message", build_start, build_end, build_message );
+        console.log( "start,end,message", build_start, build_end, build_id );
         
         var query = Ext.create('Rally.data.QueryFilter', {
             property: 'CreationDate',
@@ -88,11 +88,11 @@ Ext.define('BuildDialog', {
                 value: build_end
         }) );
         
-        if ( build_message && build_message.trim !== "" ) {
+        if ( build_id && build_id.trim !== "" ) {
             query = query.and( Ext.create( 'Rally.data.QueryFilter', {
-                property: 'Message',
+                property: 'Number',
                 operator: 'contains',
-                value: build_message
+                value: build_id
             }) );
             
         }
